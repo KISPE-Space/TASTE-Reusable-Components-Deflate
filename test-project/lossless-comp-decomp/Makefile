@@ -14,6 +14,16 @@ SPACECREATOR?=spacecreator.AppImage
 # If you need to reset this Makefile to its original state, run:
 # $ taste reset
 
+# For SAMV71 the internal memory is insufficient for the default memory footprint configuration of
+# ZLib. Therefore since this make file covers both SAMRH71 and SAMV71 builds the ZLib memory configuration 
+# is reduced from its default 256KB footprint to 128KB, and the HEAP (added to ZLib for TASTE) is 
+# reduced from 384 KB to 160 KB.
+#
+# MAX_WBITS sets windowBits in ZLib
+# MAX_MEM_LEVEL sets memLevel in ZLib
+# STATIC_POOL_SIZE sets the size of the heap allocated for ZLib use
+export PARTITION_1_USER_CFLAGS=-DMAX_WBITS=14 -DMAX_MEM_LEVEL=7 -DSTATIC_POOL_SIZE=163840 
+
 # Disable the progress bar from taste-update-data-view when building systems
 export NO_PROGRESS_BAR=1
 
